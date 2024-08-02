@@ -6,7 +6,7 @@ router.get("/", async (ctx: Context) => {
   console.log(`IP: ${ctx.request.ip}`);
   const file = await get();
   if (file) {
-    ctx.response.headers.set("content-type", "text/calendar; charset=utf-8");
+    ctx.response.headers.set("content-type", "text/plain; charset=utf-8");
     ctx.response.status = Status.OK;
     ctx.response.body = file;
   } else {
