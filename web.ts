@@ -1,18 +1,18 @@
-import { Application, Context, Router, Status } from "https://deno.land/x/oak@14.2.0/mod.ts";
-import { getIcal } from "./ical.ts";
+import { Application, Context, Router, Status } from "https://deno.land/x/oak@v16.1.0/mod.ts";
+import { get } from "./file.ts";
 
 const router: Router = new Router();
 router.get("/", async (ctx: Context) => {
   console.log(`IP: ${ctx.request.ip}`);
-  const ical = await getIcal(2024);
-  if (ical) {
+  const file = await get();
+  if (file) {
     ctx.response.headers.set("content-type", "text/calendar; charset=utf-8");
     ctx.response.status = Status.OK;
-    ctx.response.body = ical;
+    ctx.response.body = file;
   } else {
     ctx.response.headers.set("content-type", "text/plain; charset=utf-8");
     ctx.response.status = Status.NotFound;
-    ctx.response.body = "ical not found";
+    ctx.response.body = "file not found";
   }
 });
 
