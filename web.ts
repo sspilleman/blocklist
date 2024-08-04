@@ -1,25 +1,41 @@
-import { Application, Context, Router, Status } from "https://deno.land/x/oak@v16.1.0/mod.ts";
+// import { Application, Context, Router, Status } from "https://deno.land/x/oak@v16.1.0/mod.ts";
 import { get } from "./file.ts";
 
-const router: Router = new Router();
-router.get("/", async (ctx: Context) => {
-  console.log(`IP: ${ctx.request.ip}`);
+// const router: Router = new Router();
+// router.get("/", async (ctx: Context) => {
+//   console.log(`IP: ${ctx.request.ip}`);
+//   const file = await get();
+//   if (file) {
+//     // ctx.response.headers.set("content-type", "text/plain; charset=utf-8");
+//     ctx.response.status = Status.OK;
+//     ctx.response.body = file;
+//   } else {
+//     // ctx.response.headers.set("content-type", "text/plain; charset=utf-8");
+//     ctx.response.status = Status.NotFound;
+//     ctx.response.body = "file not found";
+//   }
+// });
+
+// const app = new Application();
+// app.addEventListener("listen", (e) => console.log(`Listen: ${e.port}`));
+// app.use(router.routes());
+// app.use(router.allowedMethods());
+// app.listen({ port: 10101 });
+
+const handler: Deno.ServeHandler = async (_request: Request) => {
   const file = await get();
   if (file) {
-    // ctx.response.headers.set("content-type", "text/plain; charset=utf-8");
-    ctx.response.status = Status.OK;
-    ctx.response.body = file;
+    return new Response(file, { status: 200 });
   } else {
-    // ctx.response.headers.set("content-type", "text/plain; charset=utf-8");
-    ctx.response.status = Status.NotFound;
-    ctx.response.body = "file not found";
+    return new Response("not found", { status: 404 });
   }
-});
+};
 
-const app = new Application();
-app.addEventListener("listen", (e) => console.log(`Listen: ${e.port}`));
-app.use(router.routes());
-app.use(router.allowedMethods());
-app.listen({ port: 10101 });
+// ctx.response.headers.set("content-type", "text/plain; charset=utf-8");
+// ctx.response.headers.set("content-type", "text/plain; charset=utf-8");
 
-// deno bundle --config ./deno.tsconfig.json --import-map deps.json formule1/web.ts formule1/deploy.ts
+const hostname = "0.0.0.0";
+const port = 10101;
+const options: Deno.ServeOptions | Deno.ServeTlsOptions = { hostname, port };
+
+Deno.serve(options, handler);

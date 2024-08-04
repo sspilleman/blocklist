@@ -1,7 +1,4 @@
-import { line } from "https://esm.sh/v133/d3-shape@3.2.0/es2022/d3-shape.mjs";
-
 const url = "https://filters.adavoid.org/ultimate-ad-filter.txt";
-
 let txt: string | undefined = undefined;
 let lines: string[] | undefined = undefined;
 let age = new Date("2000-01-01").getTime();
