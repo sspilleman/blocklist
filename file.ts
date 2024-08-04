@@ -26,18 +26,18 @@ const download = async () => {
 };
 
 export const get = async (): Promise<string | undefined> => {
-    const now = new Date().getTime();
-    if ((now - age) > 1000 * 60 * 60 * 24) {
-        console.log("refreshing");
-        await download();
-        // if (lines) return lines.join("\n");
-        if (lines) return txt;
-        else return undefined;
-    } else if (lines) {
-        console.log("cached");
-        // return lines.join("\n");
-        return txt;
-    } else {
-        return undefined;
-    }
+    await download();
+    if (lines) return lines.join("\n");
+    // const now = new Date().getTime();
+    // if ((now - age) > 1000 * 60 * 60 * 24) {
+    //     console.log("refreshing");
+    //     await download();
+    //     if (lines) return lines.join("\n");
+    //     else return undefined;
+    // } else if (lines) {
+    //     console.log("cached");
+    //     return lines.join("\n");
+    // } else {
+    //     return undefined;
+    // }
 };
