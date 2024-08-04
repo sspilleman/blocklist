@@ -21,4 +21,4 @@ const file = await get();
 if (file) {
     await upload(file);
 }
-// https://s3.spilleman.nl/shared/blocklist.txt
+
