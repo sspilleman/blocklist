@@ -5,7 +5,8 @@ let txt: string | undefined = undefined;
 let lines: string[] | undefined = undefined;
 
 const regexes: RegExp[] = [
-    /xvideos-cdn/,
+    /.*xvideos.*/,
+    /^$/,
 ];
 
 const filter = (line: string) => {
